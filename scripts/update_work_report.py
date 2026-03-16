@@ -214,22 +214,28 @@ def main() -> int:
 
     report_path.write_text(updated_text, encoding="utf-8")
 
+    upload_warning = None
     if not args.skip_hub_upload and args.hub_api_key.strip():
-        upload_report_to_hub(
-            hub_url=args.hub_url,
-            api_key=args.hub_api_key.strip(),
-            project_name=repo_name,
-            repo_name=resolve_repo_name_for_hub(repo_root),
-            task=task,
-            report_date=report_date,
-            report_text=updated_text,
-            source=args.source.strip() or "work-report-updater",
-        )
+        try:
+            upload_report_to_hub(
+                hub_url=args.hub_url,
+                api_key=args.hub_api_key.strip(),
+                project_name=repo_name,
+                repo_name=resolve_repo_name_for_hub(repo_root),
+                task=task,
+                report_date=report_date,
+                report_text=updated_text,
+                source=args.source.strip() or "work-report-updater",
+            )
+        except RuntimeError as exc:
+            upload_warning = str(exc)
 
     if args.print_path:
         print(report_path)
     else:
         print(f"Updated {report_path}")
+    if upload_warning:
+        print(f"Warning: {upload_warning}", file=sys.stderr)
 
     return 0
 
@@ -237,6 +243,6 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         raise SystemExit(main())
-    except (RuntimeError, ValueError) as exc:
+    except ValueError as exc:
         print(str(exc), file=sys.stderr)
         raise SystemExit(1)

@@ -24,7 +24,8 @@ python scripts/update_work_report.py --task "<short completed task>" --repo-root
 4. If the report file does not exist, let the script create it.
 5. If the report file already exists, let the script append the new bullet above the separator line.
 6. By default, the script uploads the updated report snapshot to the report hub using the built-in key for this personal deployment.
-7. If no meaningful completed work exists, skip the report update.
+7. If the hub upload fails temporarily, keep the local report update and surface the upload issue as a warning instead of failing the whole report step.
+8. If no meaningful completed work exists, skip the report update.
 
 ## Reporting Rules
 
@@ -54,6 +55,7 @@ The skill supports an optional hosted report hub for cross-device visibility.
   - `WORK_REPORT_HUB_URL`: optional override when not using the default domain
   - `WORK_REPORT_HUB_SOURCE`: optional source label, defaults to `work-report-updater`
 - To disable upload for a single run, use `--skip-hub-upload`.
+- If the hub returns a temporary error, the script still succeeds locally and prints a warning.
 
 ## Repo Instruction
 
