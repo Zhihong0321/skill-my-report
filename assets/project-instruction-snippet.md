@@ -8,4 +8,5 @@ Add this to the repo-level instruction file used by your coding agent:
 - Skip report updates for discussion only, planning only, incomplete work, or failed attempts that did not produce a finished outcome.
 - Keep the task summary short, simple, and written as completed work.
 - Create or update the report in the repo root with the format `work-report-[mon-day-year]-[repo-name].md`.
+- If `WORK_REPORT_HUB_API_KEY` is configured in the agent environment, let the skill sync the updated report to the hosted hub as well.
 ```

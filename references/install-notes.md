@@ -22,3 +22,4 @@ Make the skill portable across Agent Skills-compatible coding tools.
 - Publish the skill in a Git repository with the skill folder contents at the repo root, or in a multi-skill repository with one folder per skill.
 - Users can then install from GitHub or a local path with tools that support the open Agent Skills ecosystem.
 - For autonomous behavior, each project still needs a repo-level instruction file that tells the agent to use this skill after meaningful completed work.
+- If you use the hosted report hub, configure `WORK_REPORT_HUB_API_KEY` and optionally `WORK_REPORT_HUB_URL` in the agent environment instead of hard-coding secrets into the repo.
