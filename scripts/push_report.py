@@ -11,6 +11,7 @@ from pathlib import Path
 
 
 DEFAULT_APP_URL = "https://work-report-hub-production.up.railway.app"
+DEFAULT_API_KEY = "@eternalgy2026"
 
 
 def parse_args() -> argparse.Namespace:
@@ -22,8 +23,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--api-key",
-        default=os.environ.get("WORK_REPORT_HUB_API_KEY", ""),
-        help="APP_API_KEY configured on the app. Defaults to WORK_REPORT_HUB_API_KEY.",
+        default=os.environ.get("WORK_REPORT_HUB_API_KEY", DEFAULT_API_KEY),
+        help="APP_API_KEY configured on the app. Defaults to WORK_REPORT_HUB_API_KEY or the built-in key.",
     )
     parser.add_argument("--project-name", required=True, help="Display name for the project.")
     parser.add_argument("--repo-name", required=True, help="Repository or GitHub name.")

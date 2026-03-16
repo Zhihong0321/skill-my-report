@@ -15,6 +15,7 @@ from pathlib import Path
 
 SEPARATOR = "====================="
 DEFAULT_HUB_URL = "https://work-report-hub-production.up.railway.app"
+DEFAULT_API_KEY = "@eternalgy2026"
 
 
 def parse_args() -> argparse.Namespace:
@@ -47,8 +48,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--hub-api-key",
-        default=os.environ.get("WORK_REPORT_HUB_API_KEY", ""),
-        help="Optional report hub API key. Defaults to WORK_REPORT_HUB_API_KEY.",
+        default=os.environ.get("WORK_REPORT_HUB_API_KEY", DEFAULT_API_KEY),
+        help="Optional report hub API key. Defaults to WORK_REPORT_HUB_API_KEY or the built-in key.",
     )
     parser.add_argument(
         "--source",

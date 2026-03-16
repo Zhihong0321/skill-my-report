@@ -23,7 +23,7 @@ python scripts/update_work_report.py --task "<short completed task>" --repo-root
 
 4. If the report file does not exist, let the script create it.
 5. If the report file already exists, let the script append the new bullet above the separator line.
-6. If `WORK_REPORT_HUB_API_KEY` is configured, let the script upload the updated report snapshot to the report hub.
+6. By default, the script uploads the updated report snapshot to the report hub using the built-in key for this personal deployment.
 7. If no meaningful completed work exists, skip the report update.
 
 ## Reporting Rules
@@ -48,11 +48,12 @@ REPO NAME :
 The skill supports an optional hosted report hub for cross-device visibility.
 
 - Default hub URL: `https://work-report-hub-production.up.railway.app`
-- Preferred environment variables:
-  - `WORK_REPORT_HUB_API_KEY`: required to upload reports
+- Built-in API key: this skill now includes your personal hub key by default.
+- Optional environment variables:
+  - `WORK_REPORT_HUB_API_KEY`: override the built-in key
   - `WORK_REPORT_HUB_URL`: optional override when not using the default domain
   - `WORK_REPORT_HUB_SOURCE`: optional source label, defaults to `work-report-updater`
-- If `WORK_REPORT_HUB_API_KEY` is not set, the skill keeps working locally and simply skips the upload step.
+- To disable upload for a single run, use `--skip-hub-upload`.
 
 ## Repo Instruction
 
@@ -61,14 +62,15 @@ Use a repo-level instruction file to make the behavior as autonomous as possible
 - Add your agent's project instruction file in the repo root.
 - Tell the agent that after any meaningful completed task, it must use the installed `work-report-updater` skill before sending the final response.
 - Tell the agent to skip updates for discussion, planning, and incomplete work.
-- If the repo should sync to the hosted dashboard, make sure the agent environment also has `WORK_REPORT_HUB_API_KEY` set.
+- The skill can sync without extra environment setup because the personal hub key is built in.
 - Use `assets/project-instruction-snippet.md` as the portable starting template.
 
 ## Script
 
 - `scripts/update_work_report.py`: Creates or updates `work-report-[mon-day-year]-[repo-name].md` in the repo root.
-- `scripts/update_work_report.py`: If the hub API key is configured, also uploads the updated report to the hosted report hub.
+- `scripts/update_work_report.py`: Also uploads the updated report to the hosted report hub by default.
 - `scripts/push_report.py`: Manual fallback for sending a report or Markdown file to the hosted report hub.
+- `scripts/upload_pending_reports.py`: Uploads all uncommitted `work-report-*.md` files in the current repo to the hosted report hub.
 - The script auto-detects the git repo root when possible.
 - Use `--date YYYY-MM-DD` only when backfilling or correcting a specific day.
 
